@@ -7,7 +7,7 @@ from collections import Counter
 
 option = st.selectbox(
     'Selecciona el pais para obtener información',
-    ('Selecciona un pais','Panama', 'Republica Dominicana', 'Ecuador', 'Mexico', 'Colombia', 'Venezuela', 'Argentina', 'Brasil', 'Peru', 'Chile', 'Uruguay', 'Paraguay'))
+    ('Selecciona un pais','Panama', 'Republica Dominicana', 'Ecuador', 'Mexico', 'Colombia', 'Venezuela', 'Argentina', 'Peru', 'Chile', 'Uruguay', 'Paraguay'))
 
 countries = {
     "Panama": "panama2.json",
@@ -55,18 +55,22 @@ if option in countries:
 
     # sigma
     sigma_res = []
+    sigma_behaviors = []
     for obj2 in results:
         if obj2.get("attributes").get("sigma_analysis_results"):
             for sig in obj2.get("attributes").get("sigma_analysis_results"):
                 sigma_res.append(sig.get("rule_title"))
+                sigma_behaviors[sig.get("rule_title")] = []
+                for match in sig.get("match_context"):
+                    sigma_behaviors[sig.get("rule_title")].append(match.get("values"))
 
     sigmas_extracted = dict(Counter(sigma_res))
     a = sorted(sigmas_extracted.items(), key=lambda x: x[1], reverse=True)    
     dict(a)
-    #st.table(data=a)
     dftable = pd.DataFrame(a, columns=("Sigma rule", "Count"))
-
     st.table(dftable)
+
+
 
 
 
