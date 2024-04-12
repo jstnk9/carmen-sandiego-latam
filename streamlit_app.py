@@ -60,9 +60,11 @@ if option in countries:
         if obj2.get("attributes").get("sigma_analysis_results"):
             for sig in obj2.get("attributes").get("sigma_analysis_results"):
                 sigma_res.append(sig.get("rule_title"))
-                sigma_behaviors[sig.get("rule_title")] = []
+                tmp_json = {}
+                tmp_json[sig.get("rule_title")] = []
                 for match in sig.get("match_context"):
-                    sigma_behaviors[sig.get("rule_title")].append(match.get("values"))
+                    tmp_json[sig.get("rule_title")].append(match.get("values"))
+                sigma_behaviors.append(tmp_json)
 
     sigmas_extracted = dict(Counter(sigma_res))
     a = sorted(sigmas_extracted.items(), key=lambda x: x[1], reverse=True)    
