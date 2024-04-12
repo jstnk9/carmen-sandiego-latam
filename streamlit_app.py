@@ -3,11 +3,10 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import json
-import altair as alt
-import streamlit as st
+from collections import Counter
 
 option = st.selectbox(
-    'How would you like to be contacted?',
+    'Selecciona el pais para obtener información',
     ('Selecciona un pais','Panama', 'Republica Dominicana', 'Ecuador', 'Mexico', 'Colombia', 'Venezuela', 'Argentina', 'Brasil', 'Peru', 'Chile', 'Uruguay', 'Paraguay'))
 
 countries = {
@@ -18,7 +17,7 @@ countries = {
     "Colombia": "colombia2.json",
     "Venezuela": "venezuela2.json",
     "Argentina": "argentina2.json",
-    "Brasil": "brazil2.json",
+#    "Brasil": "brazil2.json",
     "Peru": "peru2.json",
     "Chile": "chile2.json",
     "Uruguay": "uruguay2.json",
@@ -45,13 +44,40 @@ if option in countries:
     df = pd.DataFrame(data)
     #df
 
-
+    #chart
     df_top = df[df['malware_config'] != 'unknown'].groupby('malware_config').agg(count=('sha256', 'count')).reset_index().sort_values('count', ascending=False).head(10)
 
     st.altair_chart(alt.Chart(df_top).mark_bar().encode(
         alt.X('malware_config'),
         alt.Y('count', sort='-y')
-    ).properties(width=600,title="TOP 10 Principales familias de malware"))
+    ).properties(width=600,title="TOP 10 Principales familias de malware en %s"%(option)))
+    # end chart
+
+    # sigma
+    if results.get("attributes").get("sigma_analysis_results"):
+        sigma_res = []
+        for sig in results.get("attributes").get("sigma_analysis_results"):
+            sigma_res.append(sig.get("rule_title"))
+
+        sigmas_extracted = dict(Counter(sigma_res))
+        a = sorted(sigmas_extracted.items(), key=lambda x: x[1], reverse=True)    
+        dict(a)
+
+    labels = []
+    sizes = []
+
+    for x, y in a.items():
+        labels.append(x)
+        sizes.append(y)
+
+    # Plot
+    plt.pie(sizes, labels=labels, autopct="%1.1f%%")
+    # Create a pie chart
+    plt.title('Reglas sigma con mas detecciones')
+
+    plt.axis('equal')
+    plt.show()
+    # end sigma
 
 else:
     st.write('La opcion %s no se encuentra disponible'%(option))
