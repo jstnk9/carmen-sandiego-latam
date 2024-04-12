@@ -74,7 +74,10 @@ if option in countries:
 
     for b in sigma_behaviors:
         for k,v in b.items():
-            st.markdown("<details> <summary> %s </summary> ``` %s ````  </details>"%(k,v))
+            st.markdown("<details> <summary> %s </summary>"%(k))
+            for m in v:
+                st.markdown("``` %s ```` "%(m))
+            st.markdown("</details>")
 
 
 
