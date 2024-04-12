@@ -72,6 +72,10 @@ if option in countries:
     dftable = pd.DataFrame(a, columns=("Sigma rule", "Count"))
     st.table(dftable)
 
+    for b in sigma_behaviors:
+        for k,v in b.items():
+            st.markdown("<details> <summary> %s </summary> ``` %s ````  </details>"%(k,v))
+
 
 
 
