@@ -76,9 +76,7 @@ if option in countries:
         for k,v in b.items():
             with st.expander("%s"%(k)):
                 for m in v:
-                    st.code(f"""
-                            st.markdown('''{m}''')
-                            """)
+                    st.code(m)
 
 
 
