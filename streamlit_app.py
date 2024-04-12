@@ -8,7 +8,7 @@ import streamlit as st
 
 option = st.selectbox(
     'How would you like to be contacted?',
-    ('Panama', 'Republica Dominicana', 'Ecuador', 'Mexico', 'Colombia', 'Venezuela', 'Argentina', 'Brasil', 'Peru', 'Chile', 'Uruguay', 'Paraguay'))
+    ('Selecciona un pais','Panama', 'Republica Dominicana', 'Ecuador', 'Mexico', 'Colombia', 'Venezuela', 'Argentina', 'Brasil', 'Peru', 'Chile', 'Uruguay', 'Paraguay'))
 
 countries = {
     "Panama": "panama2.json",
@@ -26,7 +26,7 @@ countries = {
 }
 
 if option in countries:
-    f = open("panama2.json", "r", encoding="utf8")
+    f = open(countries.get(option), "r", encoding="utf8")
     results = json.load(f)
 
 
