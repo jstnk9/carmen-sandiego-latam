@@ -63,7 +63,7 @@ if option in countries:
             sigmas_extracted = dict(Counter(sigma_res))
             a = sorted(sigmas_extracted.items(), key=lambda x: x[1], reverse=True)    
             dict(a)
-            st.table(data=a)
+    st.table(data=a)
 
 
 else:
