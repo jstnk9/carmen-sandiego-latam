@@ -54,15 +54,15 @@ if option in countries:
     # end chart
 
     # sigma
+    sigma_res = []
     for obj2 in results:
         if obj2.get("attributes").get("sigma_analysis_results"):
-            sigma_res = []
             for sig in obj2.get("attributes").get("sigma_analysis_results"):
                 sigma_res.append(sig.get("rule_title"))
 
-            sigmas_extracted = dict(Counter(sigma_res))
-            a = sorted(sigmas_extracted.items(), key=lambda x: x[1], reverse=True)    
-            dict(a)
+    sigmas_extracted = dict(Counter(sigma_res))
+    a = sorted(sigmas_extracted.items(), key=lambda x: x[1], reverse=True)    
+    dict(a)
     st.table(data=a)
 
 
