@@ -2,7 +2,6 @@ import altair as alt
 import numpy as np
 import pandas as pd
 import streamlit as st
-import matplotlib.pyplot as plt
 import json
 import altair as alt
 
@@ -36,7 +35,7 @@ df = pd.DataFrame(data)
 
 df_top = df[df['malware_config'] != 'unknown'].groupby('malware_config').agg(count=('sha256', 'count')).reset_index().sort_values('count', ascending=False).head(10)
 
-alt.Chart(df_top).mark_bar().encode(
-      alt.X('malware_config'),
-      alt.Y('count', sort='-y')
+st.Chart(df_top).mark_bar().encode(
+      st.X('malware_config'),
+      st.Y('count', sort='-y')
 ).properties(width=600,title="TOP 10 Principales familias de malware")
