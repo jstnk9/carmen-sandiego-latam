@@ -62,22 +62,8 @@ if option in countries:
         sigmas_extracted = dict(Counter(sigma_res))
         a = sorted(sigmas_extracted.items(), key=lambda x: x[1], reverse=True)    
         dict(a)
+        st.table(data=a)
 
-    labels = []
-    sizes = []
-
-    for x, y in a.items():
-        labels.append(x)
-        sizes.append(y)
-
-    # Plot
-    plt.pie(sizes, labels=labels, autopct="%1.1f%%")
-    # Create a pie chart
-    plt.title('Reglas sigma con mas detecciones')
-
-    plt.axis('equal')
-    plt.show()
-    # end sigma
 
 else:
     st.write('La opcion %s no se encuentra disponible'%(option))
